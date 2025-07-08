@@ -97,8 +97,6 @@ The program will automatically:
 
 The program provides a rich visual interface with real-time information:
 
-<img width="638" alt="Tracking_interface" src="https://github.com/user-attachments/assets/62e2ff2f-1579-445b-b6c9-66a4c98ba8e3" />
-
 ![Target_follow](https://github.com/user-attachments/assets/d6d3e755-6bca-4f6f-8d0e-8ebc52442c23)
 
 
