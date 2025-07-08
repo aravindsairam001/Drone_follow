@@ -23,7 +23,6 @@ Drone_follow/
 │   ├── control_sequences.py # High-level control sequences
 │   ├── vision.py          # Object detection and tracking
 │   └── movement.py        # Movement control and navigation
-├── screenshots/           # Documentation images
 └── yolov8n.pt             # YOLOv8 model (nano version)
 ```
 
