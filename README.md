@@ -1,6 +1,5 @@
 # ESP-Drone Human Following System
 
-![ESP-Drone Human Following](screenshots/drone_view.jpg)
 
 ## Overview
 
@@ -158,22 +157,6 @@ The computer vision pipeline includes:
 3. Target selection based on size and position
 4. Tracking through successive frames
 5. Position analysis to generate movement commands
-
-## Screenshots
-
-*Add your screenshots here. Below are placeholders for the types of screenshots you might include.*
-
-![Drone View](screenshots/drone_view.jpg)
-*Main interface showing tracking and status information*
-
-![Human Detection](screenshots/human_detection.jpg)
-*YOLOv8 detection with confidence scores*
-
-![Control UI](screenshots/control_ui.jpg)
-*User interface elements showing drone status and controls*
-
-![Follow Mode](screenshots/follow_mode.jpg)
-*Drone actively following a target*
 
 ## Troubleshooting
 
