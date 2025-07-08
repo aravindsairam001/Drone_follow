@@ -94,19 +94,106 @@ The program will automatically:
 - `+/-` - Adjust safety scaling in test mode (10% to 100%)
 - `q` - Quit the application
 
-## Features
+## Visual Interface
 
-- Human detection and tracking using YOLOv8
-- Multi-zone precision control for accurate following
-- Visual feedback with directional indicators
-- Safety features including test mode and scaled movements
-- Modular and maintainable codebase
+The program provides a rich visual interface with real-time information:
 
-## Implementation Details
+![Tracking Interface](screenshots/tracking_interface.jpg)
 
-The system implements a multi-zone control approach:
-- Outer zone: Stronger corrections for large offsets
-- Inner zone: Micro-adjustments for fine positioning
-- Hover zone: No movement when target is perfectly centered
+### Status Indicators
+- **Status Dot**: Green when armed, red when disarmed
+- **Mode Display**: Shows current modes (ARMED, ALT HOLD, FOLLOW MODE, TEST)
+- **Arming Sequence**: Visual progress bar during arming
+- **FPS Counter**: Shows processing performance
 
-Movement commands include proportional control with dampening to prevent oscillation when the drone is near the target center.
+### Tracking Visualization
+- **Target Bounding Box**: Green box around the tracked human
+- **Tracking Metrics**: Distance, size, and position relative to center
+- **Movement Arrows**: Directional indicators showing current movement commands
+- **Intensity Bars**: Visual representation of command strength
+- **Zone Indicators**: Shows which control zone the target is in
+
+## Technical Implementation
+
+### Movement Control Logic
+
+The system uses a sophisticated multi-zone control approach:
+
+- **Outer Zone**: Stronger corrections with higher intensity for large offsets
+- **Middle Zone**: Moderate corrections for general positioning
+- **Inner Zone**: Fine micro-adjustments for precise positioning
+- **Center Zone**: Minimal or no movement when target is correctly positioned
+
+Movement commands include:
+- **Roll** (left/right): Keeps target centered horizontally
+- **Thrust** (up/down): Maintains vertical positioning
+- **Pitch** (forward/backward): Maintains optimal distance based on target size
+- **Yaw**: Currently not used, but available for future enhancements
+
+### Command Protocol
+
+The drone uses a joystick-style protocol with the following structure:
+1. Header byte (0x30)
+2. Roll value (float)
+3. Pitch value (float)
+4. Yaw value (float)
+5. Thrust value (float)
+6. Checksum byte
+
+Special commands (ARM, DISARM, TAKEOFF, LAND) use predefined packet formats.
+
+### Networking
+
+Communication with the drone is handled through UDP:
+- Socket is initialized at startup
+- Commands are rate-limited to prevent flooding
+- Comprehensive error handling ensures robustness
+- Automatic socket reinitialization if errors occur
+
+### Vision System
+
+The computer vision pipeline includes:
+1. Frame capture from ESP32 camera or webcam
+2. YOLOv8 object detection to identify humans
+3. Target selection based on size and position
+4. Tracking through successive frames
+5. Position analysis to generate movement commands
+
+## Screenshots
+
+*Add your screenshots here. Below are placeholders for the types of screenshots you might include.*
+
+![Drone View](screenshots/drone_view.jpg)
+*Main interface showing tracking and status information*
+
+![Human Detection](screenshots/human_detection.jpg)
+*YOLOv8 detection with confidence scores*
+
+![Control UI](screenshots/control_ui.jpg)
+*User interface elements showing drone status and controls*
+
+![Follow Mode](screenshots/follow_mode.jpg)
+*Drone actively following a target*
+
+## Troubleshooting
+
+- **No camera detected**: Check ESP32 camera power and connectivity
+- **Connection failures**: Verify drone IP and port settings
+- **Command send errors**: Ensure network connection is stable
+- **Low FPS**: Consider using a smaller YOLOv8 model or reducing resolution
+- **Erratic movement**: Adjust dampening settings in config.py
+- **Socket errors**: The system will automatically try to reinitialize sockets
+
+## Future Enhancements
+
+- Obstacle avoidance using depth estimation
+- Multiple target tracking and selection
+- Gesture control recognition
+- Path planning for smoother navigation
+- Video recording and streaming capabilities
+
+## Acknowledgments
+
+- ESP-Drone project for the drone firmware
+- Ultralytics for the YOLOv8 object detection model
+- OpenCV community for computer vision tools
